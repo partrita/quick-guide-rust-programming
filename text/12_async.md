@@ -27,7 +27,7 @@
 비동기 태스크를 만들고 실행하기 위해서 가장 먼저 필요한 것은 Tokio라는 크레이트를 추가하는 것입니다.
 아래와같이 `cargo add tokio --features=full` 명령으로 Cargo.toml에 추가할 수도 있고, 직접 Cargo.toml 파일에 입력해서 추가할 수도 있습니다.
 
-```
+```console
 $ cargo add tokio --features=full
 
 $ cat Cargo.toml
@@ -60,7 +60,7 @@ Tokio외에도 몇가지 런타임 구현체가 있습니다.
 비동기로 실행되는 함수라는 것이 무엇인지 알아보기 위해 일단 비동기 함수를 한번 만들어보겠습니다.
 그리고 일단 다음 예제를 한번 실행해봅니다.
 
-```rust
+```rust,ignore
 use std::time::Duration;
 
 async fn task_one() -> i32 {
@@ -158,13 +158,13 @@ await 키워드가 사용되어서 비동기 함수가 완료가 되었으므로
 
 예를 들어 다음 func_not_async 함수는 비동기 함수가 될 필요가 없습니다.
 await 키워드로 비동기 함수를 실행시키지 않았기 때문입니다.
-```rust
+```rust,ignore
 fn func_not_async() {
     let future_one = task_one();
 }
 ```
 하지만 다음과 같이 await 키워드를 사용하는 함수 func_async는 비동기 함수가 되어야합니다.
-```rust
+```rust,ignore
 async fn func_async() {
     task_one().await;
 }
@@ -175,7 +175,7 @@ async fn func_async() {
 우리는 이전 예제에서 각 비동기 함수를 순서대로 동기 함수인 것 같이 호출해보았습니다.
 이번에는 비동기 함수들을 정말 비동기 방식으로 호출하는 예제를 만들어보겠습니다.
 
-```rust
+```rust,ignore
 use std::time::Duration;
 
 async fn task_one() -> i32 {
@@ -231,7 +231,7 @@ join은 여러개의 future 혹인 비동기 블럭을 입력을 받아서 하�
 
 아래 예제는 대기 시간을 좀 더 잘 확인하기 위해 5초로 바꾸고, std::thread::sleep이 아니라 tokio::time::sleep를 비교해본 예제입니다.
 
-```rust
+```rust,ignore
 use std::time::Duration;
 
 async fn task_one_async_sleep() -> i32 {
@@ -321,7 +321,7 @@ sleep함수이외에도 tokio에서 제공하는 tokio::fs 등의 크레이트�
 상황에 따라 다르겠지만 예를 들면 다음과 같이 2개의 비동기 태스크를 실행할 수 있습니다.
 하나의 비동기 태스크에는 동기 크레이트 thread::sleep을 사용하는 함수들을 실행하고, 다른 비동기 태스크에는 비동기 함수들만 실행하고 있습니다.
 
-```
+```rust,ignore
 use std::time::Duration;
 
 async fn task_one_async_sleep() -> i32 {
@@ -401,7 +401,7 @@ Sleep: 10 seconds
 
 아래 예제는 2개의 비동기 함수 task_one, task_two를 테스트 케이스에서 호출하는 예제입니다.
 
-```rust
+```rust,ignore
 use std::time::Duration;
 
 async fn task_one() -> i32 {

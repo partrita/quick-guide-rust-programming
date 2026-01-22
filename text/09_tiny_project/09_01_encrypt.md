@@ -156,8 +156,8 @@ pub trait MagicCryptTrait {
 ```
 
 함수 정의만 보면 
-* 인자로 받는 것은 &str 타입(AsRef<str>은 간단하게 생각하면 &str과 같습니다)이다. 
-* 반환값은 String 타입이다. 즉 새로운 String 객체를 생성해준다.
+* 인자로 받는 것은 `&str` 타입(`AsRef<str>`은 간단하게 생각하면 `&str`과 같습니다)이다.
+* 반환값은 `String` 타입이다. 즉 새로운 `String` 객체를 생성해준다.
 
 *AsRef도 트레이트입니다. 제가 MagicCryptTrait에 대해서 설명하고 있는 순서대로 메뉴얼 페이지에서 직접 검색해보시길 추천합니다.*
 

@@ -1,0 +1,11 @@
+[book]
+authors = ["gurugio"]
+language = "ko"
+src = "text"
+title = "러스트 프로그래밍 빠르게 시작하기"
+
+[rust]
+edition = "2021"
+
+[output.html]
+git-repository-url = "https://github.com/gurugio/my-rust-book"

@@ -150,20 +150,6 @@ impl ProductID {
 digit필드와 id필드는 각각 자리수와 입력 데이터를 저장하는 문자열입니다.
 name필드가 왜 필요한지는 다음 코드를 보면 알 수 있습니다.
 이렇게 데이터 구조의 형태가 동일하니 사용자에게서 두 데이터를 입력받거나, 구조체에 있는 데이터를 읽어오는 코드가 동일하게됩니다.
-    id: Option<String>,
-    digit: usize,
-    name: String,
-}
-
-impl ProductID {
-    pub fn new(digit: usize) -> Self {
-        ProductID {
-            name: "ProductID".to_owned(),
-            digit,
-            id: None,
-        }
-    }
-}
 ```
 
 고객ID와 제품ID가 각각 특정한 길이를 가진 문자열이기 때문에 동일한 필드를 가진 이름만 다른 구조체로 표현되고 있습니다.
