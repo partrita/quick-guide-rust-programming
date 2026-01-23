@@ -74,7 +74,7 @@ fn main() {
 지연처리에 대표적인 예가 피보나치 수열을 생성하는 것입니다. 러스트의 이터레이터를 이용해서 피보나치 수열을 만드는 예제를 만들어보겠습니다.
 
 ```rust
-// src/functional_iterator/main.rs
+// code/functional_iterator/main.rs
 struct Fibonacci {
     curr: u32,
     next: u32,
@@ -176,7 +176,7 @@ next 메소드가 호출될 때마다 fib_iter 객체안에 저장하고 있는 
 러스트는 C/C++언어와 같이 함수 포인터를 지원합니다. 다음은 fizzbuzz 함수를 함수 포인터로 구현한 예제입니다.
 
 ```rust
-// src/functional_function_pointer/main.rs
+// code/functional_function_pointer/main.rs
 fn fizzbuzz_fn(fizzfn: fn(i32) -> bool, buzzfn: fn(i32) -> bool) {
     for i in 1..=100 {
         if fizzfn(i) && buzzfn(i) {
@@ -241,7 +241,7 @@ fn(i32) -> bool
 클로저는 간단하게 생각하면 이름이 없는 함수입니다. 함수 포인터를 사용할 때는 fizzcheck이나 buzzcheck같은 함수를 만들고, 그 함수 이름을 다른 함수로 전달했습니다. 이로써 함수 이름이 곧 함수 포인터라는 것도 알 수 있었습니다. 그럼 fizzbuzz예제를 함수 포인터가 아닌 클로저를 사용하도록 바꿔보겠습니다.
 
 ```rust
-// src/functional_closure_nocapture/main.rs
+// code/functional_closure_nocapture/main.rs
 fn fizzbuzz_fn(fizzfn: fn(i32) -> bool, buzzfn: fn(i32) -> bool) {
     for i in 1..=100 {
         if fizzfn(i) && buzzfn(i) {
@@ -289,37 +289,37 @@ fn main() {
 t$ cargo run --bin closure
    Compiling my-rust-book v0.1.0 (/home/gkim/study/my-rust-book)
 error[E0308]: arguments to this function are incorrect
-  --> src/closure/main.rs:24:5
+  --> code/closure/main.rs:24:5
    |
 24 |     fizzbuzz_fn(|x| x % fizz == 0, |y| y % buzz == 0);
    |     ^^^^^^^^^^^
    |
 note: expected fn pointer, found closure
-  --> src/closure/main.rs:24:17
+  --> code/closure/main.rs:24:17
    |
 24 |     fizzbuzz_fn(|x| x % fizz == 0, |y| y % buzz == 0);
    |                 ^^^^^^^^^^^^^^^^^
    = note: expected fn pointer `fn(i32) -> bool`
-                 found closure `{closure@src/closure/main.rs:24:17: 24:20}`
+                 found closure `{closure@code/closure/main.rs:24:17: 24:20}`
 note: closures can only be coerced to `fn` types if they do not capture any variables
-  --> src/closure/main.rs:24:25
+  --> code/closure/main.rs:24:25
    |
 24 |     fizzbuzz_fn(|x| x % fizz == 0, |y| y % buzz == 0);
    |                         ^^^^ `fizz` captured here
 note: expected fn pointer, found closure
-  --> src/closure/main.rs:24:36
+  --> code/closure/main.rs:24:36
    |
 24 |     fizzbuzz_fn(|x| x % fizz == 0, |y| y % buzz == 0);
    |                                    ^^^^^^^^^^^^^^^^^
    = note: expected fn pointer `fn(i32) -> bool`
-                 found closure `{closure@src/closure/main.rs:24:36: 24:39}`
+                 found closure `{closure@code/closure/main.rs:24:36: 24:39}`
 note: closures can only be coerced to `fn` types if they do not capture any variables
-  --> src/closure/main.rs:24:44
+  --> code/closure/main.rs:24:44
    |
 24 |     fizzbuzz_fn(|x| x % fizz == 0, |y| y % buzz == 0);
    |                                            ^^^^ `buzz` captured here
 note: function defined here
-  --> src/closure/main.rs:1:4
+  --> code/closure/main.rs:1:4
    |
 1  | fn fizzbuzz_fn(fizzfn: fn(i32) -> bool, buzzfn: fn(i32) -> bool) {
    |    ^^^^^^^^^^^ -----------------------  -----------------------
@@ -333,7 +333,7 @@ error: could not compile `my-rust-book` (bin "closure") due to 1 previous error
 그래서 다음과 같이 고쳐야합니다.
 
 ```rust
-// src/functional_closure_capture/main.rs
+// code/functional_closure_capture/main.rs
 fn fizzbuzz_fn<FA, FB>(fizzfn: FA, buzzfn: FB)
 where
     FA: Fn(i32) -> bool,
@@ -403,7 +403,7 @@ where는 이렇게 타입 표현식이 길어질때 타입 표현식을 별도�
 가장 간단한 예를 가지고 시작해보겠습니다.
 
 ```rust
-// src/functional_map/main.rs
+// code/functional_map/main.rs
 fn fizzbuzz_2(max: i32) {
     for i in 1..=max {
         match (i % 3, i % 5) {
@@ -530,7 +530,7 @@ assert_eq!(iter.next(), None);
 이터레이터뿐 아니라 Option 타입도 map메소드를 가지고 있습니다.
 
 ```rust
-// src/functional_map_option/main.rs
+// code/functional_map_option/main.rs
 fn main() {
     let some_number = Some(5);
     let none_number: Option<i32> = None;
@@ -558,7 +558,7 @@ Option의 메소드인 map은 타입이 Some일때는 Some안에 있는 값을 �
 Option과 마찬가지로 Result 또한 map 메소드를 가지고 있습니다.
 
 ```rust
-// src/functional_map_result/main.rs
+// code/functional_map_result/main.rs
 fn divide(numerator: i32, denominator: i32) -> Result<i32, String> {
     if denominator == 0 {
         return Err(String::from("denominator cannot be zero"));
@@ -598,7 +598,7 @@ map의 장점도 있지만 단점이 디버깅이 어렵다는 것입니다. map
 첫번째로 이터레이터의 inspect 메소드가 있습니다. 사실 map하고 하는 일은 동일합니다. 이터레이터에서 개별 데이터를 하나씩 받아와서 정해진 일을 하는 것입니다. 하지만 차이가 있다면 받은 데이터를 그대로 반환한다는 것입니다. 결론적으로는 아무런 일도 하지 않는 것입니다. 왜 아무런 일도 하지 않는 메소드가 필요하냐면 바로 디버깅을 위해서 필요한 것입니다. 다음 예제를 보면 이전에 map을 사용해서 만든 fizzbuzz_3함수와 완전히 동일한데 단지 inspect를 중간에 넣은 것 뿐입니다.
 
 ```rust
-// src/functional_map_inspect/main.rs
+// code/functional_map_inspect/main.rs
 fn fizzbuzz_3(max: i32) {
     let ret = (1..=max)
         .into_iter()
@@ -712,7 +712,7 @@ inspect를 중간에 넣었지만 그 외에 아무것도 고칠 필요가 없�
 가장 단순하지만 가장 확실한 디버깅 방법은 그냥 한단계 한단계씩 나눠서 각 단계별로 결과값을 디버깅 메세지로 출력해보는 것입니다.
 
 ```rust
-// src/functional_map_debugging/main.rs
+// code/functional_map_debugging/main.rs
 fn fizzbuzz_3(max: i32) {
     let ret_range = 1..=max;
     println!("range: {:?}", ret_range);
@@ -956,7 +956,7 @@ filter 메소드는 데이터의 불변 참조를 인자로 받습니다. 인자
 마지막으로 reduce 메소드입니다. 모든 데이터에 특정 연산을 해서 하나의 데이터를 반환하는 일을 합니다. map이나 filter는 각 데이터에 특정 처리를 한 후 각 결과값들을 다시 이터레이터로 반환했다면, reduce는 하나의 데이터로 합치는 일을 합니다. 다음은 fizzbuzz 예제에 filter와 map, reduce까지 모두 적용한 예제입니다.
 
 ```rust
-// src/functional_reduce/main.rs
+// code/functional_reduce/main.rs
 fn fizzbuzz_fn<FA, FB>(fizzfn: FA, buzzfn: FB)
 where
     FA: Fn(i32) -> bool,

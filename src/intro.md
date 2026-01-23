@@ -43,7 +43,7 @@ Cargo.toml파일에 각 예제의 실행 파일을 빌드하는 설정이 있습
 ```
 [[bin]]
 name = "function_for"
-path = "src/function_for/main.rs"
+path = "code/function_for/main.rs"
 ```
 
 다음과 같이 cargo를 이용해서 빌드하고 실행할 수 있습니다.

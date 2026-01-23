@@ -1,7 +1,6 @@
 [book]
 authors = ["gurugio"]
 language = "ko"
-src = "text"
 title = "러스트 프로그래밍 빠르게 시작하기"
 
 [rust]

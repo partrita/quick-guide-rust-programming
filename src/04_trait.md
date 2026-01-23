@@ -7,7 +7,7 @@
 아주 간단한 예제를 가지고 시작해보겠습니다. 다음 예제는 서로 다른 두 구조체 Person과 Book에 공통의 트레이트 Printable을 구현하는 예제입니다.
 
 ```rust
-// src/trait/main.rs
+// code/trait/main.rs
 trait Printable {
     type Age;
     fn print(&self);
@@ -329,7 +329,7 @@ fn main() {
 % cargo run
    Compiling bin-example v0.1.0 (/Users/user/study/bin-example)
 warning: methods `print` and `get_age` are never used
- --> src/main.rs:5:8
+ --> code/main.rs:5:8
   |
 3 | trait Printable {
   |       --------- methods in this trait
@@ -342,7 +342,7 @@ warning: methods `print` and `get_age` are never used
   = note: `#[warn(dead_code)]` on by default
 
 warning: field `age` is never read
-  --> src/main.rs:12:5
+  --> code/main.rs:12:5
    |
 10 | struct Person {
    |        ------ field in this struct
@@ -351,7 +351,7 @@ warning: field `age` is never read
    |     ^^^
 
 warning: fields `author` and `published` are never read
-  --> src/main.rs:40:5
+  --> code/main.rs:40:5
    |
 38 | struct Book {
    |        ---- fields in this struct
@@ -444,7 +444,7 @@ impl fmt::Debug for Point {
 이제 코드를 실행해보면 아래와같이 우리가 지정한 형태로 객체의 값이 출력됩니다.
 
 ```rust
-// src/trait_display_debug/main.rs
+// code/trait_display_debug/main.rs
 use std::fmt;
 
 pub struct Point {
@@ -520,7 +520,7 @@ pub trait Clone: Sized {
 그래서 clone함수는 자기 자신을 참조하면서, 같은 타입을 반환하는 함수입니다. 그럼 예제를 한번 만들어보겠습니다.
 
 ```rust
-// src/trait_clone/main.rs
+// code/trait_clone/main.rs
 #[derive(Debug)]
 struct Book {
     title: String,
@@ -590,7 +590,7 @@ impl Clone for Book {
 
 ```rust
 error[E0507]: cannot move out of `self.title` which is behind a shared reference
-  --> src/main.rs:43:20
+  --> code/main.rs:43:20
    |
 43 |             title: self.title,
    |                    ^^^^^^^^^^ move occurs because `self.title` has type `String`, which does not implement the `Copy` trait
@@ -612,7 +612,7 @@ fn print_info(item: &dyn Clone) {
 
 ```rust
 error[E0038]: the trait `Clone` cannot be made into an object
-  --> src/main.rs:50:22
+  --> code/main.rs:50:22
    |
 50 | fn print_info(item: &dyn Clone) {
    |                      ^^^^^^^^^ `Clone` cannot be made into an object
@@ -648,7 +648,7 @@ struct Book {
 Default 트레이트는 구조체의 각 필드를 디폴트값으로 초기화해서 객체를 생성해줍니다. 다음 예제는 Default 트레이트를 직접 구현하지않고 derive(Default) 속성을 추가해서 자동으로 생성된 코드를 사용한 예제입니다.
 
 ```rust
-// src/trait_default/main.rs
+// code/trait_default/main.rs
 #[derive(Debug, Clone, Default)]
 struct Book {
     title: String,
@@ -677,7 +677,7 @@ Default트레이트는 default라는 메소드를 가지고 있습니다. defaul
 PartialEq는 두 객체가 같은 값을 가지고 있는지를 확인하는 트레이트입니다.
 
 ```rust
-// src/trait_partialeq_first/main.rs
+// code/trait_partialeq_first/main.rs
 #[derive(Debug, Clone, Default)]
 struct Book {
     title: String,
@@ -725,7 +725,7 @@ Yes, they are same book but different release 20190812 != 20230228.
 트레이트 이름이 PartialEq라고해서 왜 Partial이라는 이름이 들어갔는지 의아하게 생각할 수도 있습니다. 하지만 완전하게 동일한 객체를 비교하는게 아니라 위와같이 좀더 넓은 의미에서 일부 같은 값을 가진 객체도 비교할 수 있다는 유연성을 갖는다고 이해하면 쉬울듯합니다. 바로 아래 예제를 생각해보면 됩니다.
 
 ```rust
-// src/trait_partialeq_second/main.rs
+// code/trait_partialeq_second/main.rs
 #[derive(Debug)]
 struct Person {
     name: String,
@@ -814,7 +814,7 @@ fn main() {
 그런데 사실 이게 무슨 의미인지 쉽게 이해하기 어렵습니다. 그래서 위에 책과 저자를 비교하는 예제를 조금 더 확장해보면서 생각해보겠습니다.
 
 ```rust
-//src/trait_partialeq_eq/main.rs
+//code/trait_partialeq_eq/main.rs
 #[derive(Debug)]
 struct Person {
     name: String,
@@ -886,7 +886,7 @@ No, we don't know who wrote it.
 아래와 같이 사용자에게 한 문자로된 명령을 입력받는 프로그램을 만들어보겠습니다.  
 
 ```rust
-// src/trait_partialeq_assert.main.rs
+// code/trait_partialeq_assert.main.rs
 use std::io;
 
 #[derive(Debug, PartialEq)]
@@ -955,7 +955,7 @@ pub enum Command {
 $ cargo run --bin trait_partialeq_assert
    Compiling ex v0.1.0 (/Users/user/ex)
 error[E0369]: binary operation `==` cannot be applied to type `Command`
-  --> src/main.rs:29:5
+  --> code/main.rs:29:5
    |
 29 |     assert_ne!(com, Command::Execute(p));
    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -964,7 +964,7 @@ error[E0369]: binary operation `==` cannot be applied to type `Command`
    |     Command
    |
 note: an implementation of `PartialEq` might be missing for `Command`
-  --> src/main.rs:3:1
+  --> code/main.rs:3:1
    |
 3  | pub enum Command {
    | ^^^^^^^^^^^^^^^^ must implement `PartialEq`
@@ -976,7 +976,7 @@ help: consider annotating `Command` with `#[derive(PartialEq)]`
    |
 
 error[E0277]: `Command` doesn't implement `Debug`
-  --> src/main.rs:29:5
+  --> code/main.rs:29:5
    |
 29 |     assert_ne!(com, Command::Execute(p));
    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `Command` cannot be formatted using `{:?}`
@@ -1020,7 +1020,7 @@ Debug와 PartialEq 트레이트를 구현해주었더니 문제없이 빌드되�
 그럼 일반적으로 값을 비교할 때 PartialEq를 사용하는 것으로 생각한다면 굳이 Eq 트레이트를 사용해야만 하는 경우는 무엇을까요? 바로 구조체를 HashMap의 키 값으로 사용할 때 입니다.
 
 ```rust
-// src/trait_partialeq_eq_hashmap/main.rs
+// code/trait_partialeq_eq_hashmap/main.rs
 #[derive(PartialEq, Eq, Hash)]
 struct MyKey {
     x: i32,
@@ -1055,7 +1055,7 @@ MyKey는 점의 좌표를 나타냅니다. MyVal은 원점으로부터 점의 �
 그럼 간단하게 두 객체를 비교하는 예제를 보겠습니다.
 
 ```rust
-// src/trait_partialord/main.rs
+// code/trait_partialord/main.rs
 use std::cmp::Ordering;
 
 #[derive(PartialEq, Eq)]
@@ -1114,7 +1114,7 @@ main함수에서는 객체를 비교할 수 있는 2가지 방법을 보여주�
 이제 두 객체를 비교할 수 있게 되었습니다. 비교하면 생각나는게 정렬 알고리즘이지요. 한반에 있는 학생들을 키에 따라 정렬하는 예제를 만들어보았습니다.
 
 ```rust
-// src/trait_partialord_sort_first/main.rs
+// code/trait_partialord_sort_first/main.rs
 use std::cmp::Ordering;
 
 #[derive(PartialEq, Eq)]
@@ -1200,7 +1200,7 @@ ccc is 120
 아래 에제는 백터의 sort_by 메소드와 PartialOrd 트레이트를 사용하는 예제입니다.
 
 ```rust
-// src/trait_partialord_sort_second/main.rs
+// code/trait_partialord_sort_second/main.rs
 use std::cmp::Ordering;
 
 #[derive(PartialEq, Eq)]
@@ -1285,7 +1285,7 @@ ccc is 120
 다음은 Book타입의 객체를 u32타입의 ISBN 숫자로 바꾸는 예제입니다.
 
 ```rust
-// src/trait_from/main.rs
+// code/trait_from/main.rs
 #[derive(Debug)]
 struct Book {
     title: String,
@@ -1571,7 +1571,7 @@ fn main() {
 $ cargo build --bin trait_iterator_iter_mut
    Compiling pyalgo v0.1.0 (/home/gurugio/pyalgo)
 error[E0594]: cannot assign to `b.author`, which is behind a `&` reference
-  --> src/main.rs:28:9
+  --> code/main.rs:28:9
    |
 27 |     for b in book_array.iter() {
    |              -----------------
@@ -1626,7 +1626,7 @@ fn main() {
 $ cargo run --bin trait_iterator_iter_mut
    Compiling my-rust-book v0.1.0 (/home/gkim/study/my-rust-book)
 warning: fields `title` and `published` are never read
- --> src/trait_iterator_iter_mut/main.rs:3:5
+ --> code/trait_iterator_iter_mut/main.rs:3:5
   |
 2 | struct Book {
   |        ---- fields in this struct

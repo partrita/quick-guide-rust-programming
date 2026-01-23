@@ -99,7 +99,7 @@ use std::io::{stdin, stdout, Write};
 
 fn parse_config() -> Vec<SerialData> {
     // Open the configuration file
-    let mut file = match File::open("src/serial_project_step5/serial.conf") {
+    let mut file = match File::open("code/serial_project_step5/serial.conf") {
         Ok(file) => file,
         Err(_) => {
             panic!("Error: Could not find or open 'serial.conf'. Please ensure the file exists.");

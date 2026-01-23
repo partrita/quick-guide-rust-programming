@@ -540,7 +540,7 @@ fn main() {
 ```
 ```bash
 error[E0373]: closure may outlive the current function, but it borrows `counter`, which is owned by the current function
-  --> src/main.rs:18:32
+  --> code/main.rs:18:32
    |
 18 |     let handle = thread::spawn(|| thread_func_with_ref(&counter));
    |                                ^^                       ------- `counter` is borrowed here
@@ -548,7 +548,7 @@ error[E0373]: closure may outlive the current function, but it borrows `counter`
    |                                may outlive borrowed value `counter`
    |
 note: function requires argument type to outlive `'static`
-  --> src/main.rs:18:18
+  --> code/main.rs:18:18
    |
 18 |     let handle = thread::spawn(|| thread_func_with_ref(&counter));
    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -819,7 +819,7 @@ fn main() {
 ```bash
 Thread returned a value 2
 Thread returned an error OOPS, thread failed
-thread '<unnamed>' panicked at src/main.rs:10:9:
+thread '<unnamed>' panicked at code/main.rs:10:9:
 Cannot accept negative value
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 Thread panic!: Any { .. }
@@ -875,28 +875,28 @@ fn main() {
 $ cargo run
    Compiling bin-example v0.1.0 (/Users/user/study/bin-example)
 error[E0277]: `*const String` cannot be sent between threads safely
-   --> src/main.rs:24:32
+   --> code/main.rs:24:32
     |
 24  |     let handle = thread::spawn(move || thread_func(data_share_thr1));
     |                  ------------- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `*const String` cannot be sent between threads safely
     |                  |
     |                  required by a bound introduced by this call
     |
-    = help: within `MyData`, the trait `Send` is not implemented for `*const String`, which is required by `{closure@src/main.rs:24:32: 24:39}: Send`
+    = help: within `MyData`, the trait `Send` is not implemented for `*const String`, which is required by `{closure@code/main.rs:24:32: 24:39}: Send`
 note: required because it appears within the type `MyData`
-   --> src/main.rs:5:8
+   --> code/main.rs:5:8
     |
 5   | struct MyData {
     |        ^^^^^^
     = note: required for `Mutex<MyData>` to implement `Sync`
     = note: required for `Arc<Mutex<MyData>>` to implement `Send`
 note: required because it's used within this closure
-   --> src/main.rs:24:32
+   --> code/main.rs:24:32
     |
 24  |     let handle = thread::spawn(move || thread_func(data_share_thr1));
     |                                ^^^^^^^
 note: required by a bound in `spawn`
-   --> /Users/user/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/mod.rs:675:8
+   --> /Users/user/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/code/rust/library/std/code/thread/mod.rs:675:8
     |
 672 | pub fn spawn<F, T>(f: F) -> JoinHandle<T>
     |        ----- required by a bound in this function

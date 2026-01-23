@@ -192,7 +192,7 @@ Cargo.toml  src
 main.rs
 ```
 
-cargo new 명령으로 cargo-new-test이라는 디렉토리와, cargo-new-test/src라는 디렉토리가 생성됩니다. 그리고 cargo-new-test/Cargo.toml, cargo-new-test/src/main.rs 파일들이 생성됩니다.
+cargo new 명령으로 cargo-new-test이라는 디렉토리와, cargo-new-test/src라는 디렉토리가 생성됩니다. 그리고 cargo-new-test/Cargo.toml, cargo-new-test/code/main.rs 파일들이 생성됩니다.
 
 참고로 이미 존재하는 디렉토리를 Rust언어 프로젝트 디렉토리로 만들고 있다면 아래와 같이 cargo init 명령을 사용하면 됩니다. Cargo.toml 파일을 생성하고 그 외에 src디렉토리를 만들지 않는 것을 알 수 있습니다.
 
@@ -284,7 +284,7 @@ anyhow = "1.0.80"
 그럼 개발 환경 셋팅이 끝났으니 간단하게 Hello, World!를 출력해보겠습니다. 다음과 같이 main.rs를 만들어보겠습니다.
 
 ```rust
-// src/main.rs
+// code/main.rs
 fn main() {
     println!("Hello, World!");
     println!("{}", "Hello, World again!");
