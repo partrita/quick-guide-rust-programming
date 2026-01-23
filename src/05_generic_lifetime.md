@@ -3,7 +3,7 @@
 제네릭 프로그래밍은 다른 프로그래밍 언어와 마찬가지로 같은 코드를 다른 타입에 사용할 수 있도록 하는 것입니다. 제네릭을 이용한 타입(구조체와 열거형)과 제네릭을 이용한 함수(일반 함수, 메소드, 트레이트 등)을 만들 수 있는데 있는데 다음 예제로 제네릭 타입, 함수, 트레이트에 대해서 알아보겠습니다.
 
 ```rust
-// src/generic_struct/main.rs
+// code/generic_struct/main.rs
 #[derive(Debug)]
 struct Pair<T> {
     first: T,
@@ -152,7 +152,7 @@ where
 
 ```rust
 error[E0382]: use of moved value: `self.first`
-  --> src/main.rs:15:21
+  --> code/main.rs:15:21
    |
 14 |             first: self.first + rhs.first,
    |                    ---------------------- `self.first` moved due to usage in operator
@@ -160,7 +160,7 @@ error[E0382]: use of moved value: `self.first`
    |                     ^^^^^^^^^^ value used here after move
    |
 note: calling this operator moves the left-hand side
-  --> /Users/user/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/ops/arith.rs:92:12
+  --> /Users/user/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/code/rust/library/core/code/ops/arith.rs:92:12
    |
 92 |     fn add(self, rhs: Rhs) -> Self::Output;
    |            ^^^^
@@ -219,7 +219,7 @@ fn main() {
 구조체 타입에 적용된 제네릭을 사용해봤으니까 이번에는 트레이트에 적용된 제네릭을 사용해보겠습니다. 아래 예제는 이전에 트레이트를 설명하면서 사용했던 Printable 트레이트 구현 예제를 제네릭을 사용하도록 바꾼 예제입니다.
 
 ```rust
-// src/generic_trait/main.rs
+// code/generic_trait/main.rs
 trait Printable<AGE> {
     fn print(&self);
     fn get_age(&self) -> AGE;
@@ -314,7 +314,7 @@ print_info에 전달할 트레이트 객체도 &lt;u32&gt;이라는 타입 바�
 다음과 같이 트레이트에도 제네릭이 사용되고, 구조체에도 제네릭이 사용되는 경우가 실무에서 더 일반적일 것입니다.
 
 ```rust
-// src/generic_trait_struct/main.rs
+// code/generic_trait_struct/main.rs
 trait Printable<AGE> {
     fn print(&self);
     fn get_age(&self) -> AGE;
@@ -634,7 +634,7 @@ pub fn handle_command(cmd: &str) -> Result<usize> {
 아래는 handle_command 함수를 mycommand.rs로 옮기고 handle_command를 호출하는 super_handle_command을 main.rs에 만들어준 것입니다.
 
 ```rust
-// src/error/mycommand.rs
+// code/error/mycommand.rs
 #[derive(Debug, PartialEq)]
 pub enum MyError {
     UnsupportedCommand,
@@ -685,7 +685,7 @@ pub fn handle_command(cmd: &str) -> Result<usize> {
 ```
 
 ```rust
-// src/error/main.rs
+// code/error/main.rs
 mod mycommand;
 use crate::mycommand::*;
 
@@ -754,7 +754,7 @@ mycommand::handle_command가 에러를 반환하는 경우
 라이프타임은 대부분 아래와같이 어떤 구조체를 만들고, 그 구조체의 일부나 전체를 다른 구조체에서 참조하는 경우에 필요합니다.
 
 ```rust
-// src/lifetime/main.rs
+// code/lifetime/main.rs
 use std::collections::HashMap;
 
 struct Item {

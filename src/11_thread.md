@@ -109,6 +109,7 @@ fn main() {
 ```rust
 use std::sync::Arc;
 use std::thread;
+use std::sync::atomic::{AtomicUsize, Ordering};
 
 fn main() {
     let mut handles = vec![];
@@ -348,7 +349,7 @@ MutexGuard라는 객체가 생성되고 소멸되는 시점에 락이 잠기고 
 러스트에서 락을 사용하는 것만큼 중요한게 락을 사용하던 쓰레드가 락을 잠근 채로 죽어서 다른 쓰레드가 락을 사용하지 못하도록 만드는 Lock Poisoning 문제입니다.
 다음 예제 처럼 Thread-1에서 락을 잡고 사용하다가 어떤 오류로 인해 쓰레드가 죽었다고 생각해보겠습니다.
 
-```rust
+```rust,should_panic
 use std::sync::{Arc, Mutex, MutexGuard};
 
 fn main() {
@@ -515,7 +516,7 @@ counter라는 객체를 만들었고, 그 값을 그대로 thread_func에게 전
 다음 예제는 쓰레드 함수가 레퍼런스를 인자로 받습니다.
 그래서 소유권이 쓰레드 함수로 넘어가지 않고 계속 main 함수에게 있습니다.
 
-```rust
+```rust,compile_fail
 use std::{thread, time};
 
 struct Counter {
@@ -539,7 +540,7 @@ fn main() {
 ```
 ```bash
 error[E0373]: closure may outlive the current function, but it borrows `counter`, which is owned by the current function
-  --> src/main.rs:18:32
+  --> code/main.rs:18:32
    |
 18 |     let handle = thread::spawn(|| thread_func_with_ref(&counter));
    |                                ^^                       ------- `counter` is borrowed here
@@ -547,7 +548,7 @@ error[E0373]: closure may outlive the current function, but it borrows `counter`
    |                                may outlive borrowed value `counter`
    |
 note: function requires argument type to outlive `'static`
-  --> src/main.rs:18:18
+  --> code/main.rs:18:18
    |
 18 |     let handle = thread::spawn(|| thread_func_with_ref(&counter));
    |                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -746,13 +747,13 @@ fn main() {
 우선 join 메소드가 어떤 값을 반환하는지 메뉴얼을 보겠습니다.
 
 https://doc.rust-lang.org/std/thread/struct.JoinHandle.html#method.join
-```rust
+```rust,ignore
 pub fn join(self) -> Result<T>
 ```
 
 Result 타입을 반환하는 것처럼 보이는데, 사실은 우리가 보통 사용하는 Result(https://doc.rust-lang.org/std/result/)가 아니라 std::thread::Result (https://doc.rust-lang.org/std/thread/type.Result.html) 타입을 반환하는 것입니다.
 std::thread::Result는 다음과 같이 구현되어있습니다.
-```rust
+```rust,ignore
 pub type Result<T> = Result<T, Box<dyn Any + Send + 'static>>;
 ```
 
@@ -818,7 +819,7 @@ fn main() {
 ```bash
 Thread returned a value 2
 Thread returned an error OOPS, thread failed
-thread '<unnamed>' panicked at src/main.rs:10:9:
+thread '<unnamed>' panicked at code/main.rs:10:9:
 Cannot accept negative value
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 Thread panic!: Any { .. }
@@ -841,7 +842,7 @@ join 메소드의 반환값을 위해 match를 두번 사용해야하는 것이 
 쓰레드를 사용하려면 쓰레드에 객체를 주고, 쓰레드로부터 결과값을 받아야 합니다.
 만약에 다음 예제처럼 Raw Pointer가 들어간 데이터를 쓰레드에 전달해야되는 경우도 문제가 없을지 한번 생각해보겠습니다. 
 
-```rust
+```rust,compile_fail
 use std::sync::{Arc, Mutex};
 use std::{ptr, thread};
 
@@ -874,28 +875,28 @@ fn main() {
 $ cargo run
    Compiling bin-example v0.1.0 (/Users/user/study/bin-example)
 error[E0277]: `*const String` cannot be sent between threads safely
-   --> src/main.rs:24:32
+   --> code/main.rs:24:32
     |
 24  |     let handle = thread::spawn(move || thread_func(data_share_thr1));
     |                  ------------- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `*const String` cannot be sent between threads safely
     |                  |
     |                  required by a bound introduced by this call
     |
-    = help: within `MyData`, the trait `Send` is not implemented for `*const String`, which is required by `{closure@src/main.rs:24:32: 24:39}: Send`
+    = help: within `MyData`, the trait `Send` is not implemented for `*const String`, which is required by `{closure@code/main.rs:24:32: 24:39}: Send`
 note: required because it appears within the type `MyData`
-   --> src/main.rs:5:8
+   --> code/main.rs:5:8
     |
 5   | struct MyData {
     |        ^^^^^^
     = note: required for `Mutex<MyData>` to implement `Sync`
     = note: required for `Arc<Mutex<MyData>>` to implement `Send`
 note: required because it's used within this closure
-   --> src/main.rs:24:32
+   --> code/main.rs:24:32
     |
 24  |     let handle = thread::spawn(move || thread_func(data_share_thr1));
     |                                ^^^^^^^
 note: required by a bound in `spawn`
-   --> /Users/user/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/std/src/thread/mod.rs:675:8
+   --> /Users/user/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/code/rust/library/std/code/thread/mod.rs:675:8
     |
 672 | pub fn spawn<F, T>(f: F) -> JoinHandle<T>
     |        ----- required by a bound in this function

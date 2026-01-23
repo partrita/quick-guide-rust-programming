@@ -3,7 +3,7 @@
 
 # Signal handling
 
-```rust
+```rust,ignore
 use std::collections::HashMap;
 //use std::env;
 

@@ -7,13 +7,13 @@
 저는 러스트로 프로그래밍을 할 때 가장 많이 사용하는 라이브러리가 벡터(Vector) 타입이었습니다. 말 그대로 같은 타입의 데이터들을 배열같이 저장하는 것인데, 크기에 제한이 없고 접근이 빠른 등 사용하기 편리하고, 다양한 메소드들을 지원하고 있어서 데이터를 저장할 때 가장 많이 사용하는 타입입니다.
 
 >
-> 참고로 문자열을 나타내는 String도 사실은 u8타입 데이터를 벡터에 저장한 것입니다. (<https://doc.rust-lang.org/src/alloc/string.rs.html#365>) 어떤 타입이나 트레이트가 실제로 어떻게 정의되어있는지 알면 좀더 사용하기 편리합니다. 온라인 매뉴얼을 통해 쉽게 확인해볼 수 있는 방법이 있습니다. String타입의 매뉴얼 <https://doc.rust-lang.org/std/vec/struct.Vec.html> 을 열어보시면 페이지 오른쪽 위에 소스를 볼 수 있는 링크 source가 있습니다. 만약 메뉴얼에서 특정 메소드의 코드를 보고 싶다면 매뉴얼에서 해당 메소드에 대한 설명에서 source링크를 누르면 소스 페이지로 넘어갑니다.
+> 참고로 문자열을 나타내는 String도 사실은 u8타입 데이터를 벡터에 저장한 것입니다. (<https://doc.rust-lang.org/code/alloc/string.rs.html#365>) 어떤 타입이나 트레이트가 실제로 어떻게 정의되어있는지 알면 좀더 사용하기 편리합니다. 온라인 매뉴얼을 통해 쉽게 확인해볼 수 있는 방법이 있습니다. String타입의 매뉴얼 <https://doc.rust-lang.org/std/vec/struct.Vec.html> 을 열어보시면 페이지 오른쪽 위에 소스를 볼 수 있는 링크 source가 있습니다. 만약 메뉴얼에서 특정 메소드의 코드를 보고 싶다면 매뉴얼에서 해당 메소드에 대한 설명에서 source링크를 누르면 소스 페이지로 넘어갑니다.
 >
 
 벡터는 사실 거의 모든 언어마다 다 있는 것이니 굳이 길게 설명하지않고 러스트에서 자주 사용하는 패턴을 이용한 예제를 보겠습니다.
 
 ```rust
-// src/std_library_vec/main.rs
+// code/std_library_vec/main.rs
 use std::vec::Vec;
 
 #[derive(Debug)]
@@ -157,7 +157,7 @@ fn find_rust<'a>(books: &'a [Book]) -> Vec<&'a Book> {
 아마도 Vector만큼이나 많이 사용되는 자료구조를 들자면 해쉬맵(HashMap)을 꼽을 수 있을 것입니다. 이전에 벡터를 사용했던 예제를 해쉬맵으로 바꿔보겠습니다.
 
 ```rust
-// src/std_library_hashmap_simple/main.rs
+// code/std_library_hashmap_simple/main.rs
 use std::collections::HashMap;
 
 #[derive(Debug)]
@@ -264,7 +264,7 @@ fn main() {
 
 ```rust
 error[E0599]: the method `insert` exists for struct `HashMap<Book, String>`, but its trait bounds were not satisfied
-  --> src/main.rs:12:13
+  --> code/main.rs:12:13
    |
 4  | struct Book {
    | -----------
@@ -288,7 +288,7 @@ help: consider annotating `Book` with `#[derive(Eq, Hash, PartialEq)]`
    |
 
 error[E0599]: the method `insert` exists for struct `HashMap<Book, String>`, but its trait bounds were not satisfied
-  --> src/main.rs:20:13
+  --> code/main.rs:20:13
    |
 4  | struct Book {
    | -----------
@@ -312,7 +312,7 @@ help: consider annotating `Book` with `#[derive(Eq, Hash, PartialEq)]`
    |
 
 error[E0599]: the method `insert` exists for struct `HashMap<Book, String>`, but its trait bounds were not satisfied
-  --> src/main.rs:28:13
+  --> code/main.rs:28:13
    |
 4  | struct Book {
    | -----------
@@ -336,7 +336,7 @@ help: consider annotating `Book` with `#[derive(Eq, Hash, PartialEq)]`
    |
 
 error[E0599]: the method `get` exists for struct `HashMap<Book, String>`, but its trait bounds were not satisfied
-  --> src/main.rs:37:25
+  --> code/main.rs:37:25
    |
 4  | struct Book {
    | -----------
@@ -363,7 +363,7 @@ help: consider annotating `Book` with `#[derive(Eq, Hash, PartialEq)]`
 insert와 get 메소드를 사용하기 위해서 Book 구조체에 Eq, Hash, PartialEq 트레이트의 구현이 있어야한다는 에러 메세지입니다. 에러를 해결하는 것은 컴파일러가 안내하는대로 아래와 같이 Book구조체에 derive를 이용해서 Eq, Hash, PartialEq 트레이트의 구현을 추가해주면 됩니다.
 
 ```rust
-// src/std_library_hashmap/main.rs
+// code/std_library_hashmap/main.rs
 use std::collections::HashMap;
 
 #[derive(Debug, Eq, Hash, PartialEq)]
@@ -431,7 +431,7 @@ fn main() {
 이제 이 3가지를 가지고 파일을 읽는 예제를 한번 만들어보겠습니다. 설명은 길었지만 코드는 간단합니다.
 
 ```rust
-// src/std_library_file/main.rs
+// code/std_library_file/main.rs
 use std::{
     env::current_dir,
     fs::File,
@@ -456,7 +456,7 @@ fn grep(filename: &Path, word: &str) -> std::io::Result<()> {
 fn main() -> std::io::Result<()> {
     let mut filename: PathBuf = current_dir()?;
 
-    filename.push("src/std_library_file/main.rs");
+    filename.push("code/std_library_file/main.rs");
     grep(&filename, "main")?; // show lines that include specific word
     Ok(())
 }
@@ -467,13 +467,13 @@ $ cargo run --bin std_library_file
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.15s
      Running `target/debug/std_library_file`
 fn main() -> std::io::Result<()> {
-    filename.push("src/std_library_file/main.rs");
+    filename.push("code/std_library_file/main.rs");
     grep(&filename, "main")?; // show lines that include specific word
 ```
 
-main함수에서 첫번째로 하는 일은 current_dir()함수를 호출해서 프로그램이 실행되는 위치를 알아내는 것입니다. 우리는 “cargo run” 명령으로 프로그램을 실행할 것이므로 현재위치에 “src/std_library_file/main.rs” 경로를 추가하면 main.rs 파일의 위치가 될 것입니다.
+main함수에서 첫번째로 하는 일은 current_dir()함수를 호출해서 프로그램이 실행되는 위치를 알아내는 것입니다. 우리는 “cargo run” 명령으로 프로그램을 실행할 것이므로 현재위치에 “code/std_library_file/main.rs” 경로를 추가하면 main.rs 파일의 위치가 될 것입니다.
 
-한가지 주의해야할 것은 filename의 push() 메소드에 “/src/std_library_file/main.rs”와 같이 절대경로를 전달하면 안된다는 것입니다. push() 메소드는 filename에 저장된 경로에 이어서 하위 경로를 추가하는 일을 하지만, 만약에 전달된 경로가 “/”로 시작하는 절대 경로라면 filename에 저장된 경로를 지우고 전달된 경로로 바꾸게 됩니다. 결국 “/src/std_library_file/main.rs” 파일을 읽으려고하고 에러가 발생할 것입니다.
+한가지 주의해야할 것은 filename의 push() 메소드에 “/code/std_library_file/main.rs”와 같이 절대경로를 전달하면 안된다는 것입니다. push() 메소드는 filename에 저장된 경로에 이어서 하위 경로를 추가하는 일을 하지만, 만약에 전달된 경로가 “/”로 시작하는 절대 경로라면 filename에 저장된 경로를 지우고 전달된 경로로 바꾸게 됩니다. 결국 “/code/std_library_file/main.rs” 파일을 읽으려고하고 에러가 발생할 것입니다.
 
 그리고 grep이라는 함수를 호출합니다. grep 함수의 인자에는 filename의 참조를 전달합니다. 그런데 특이한게 있습니다. PathBuf타입의 변수의 참조를 전달하는데 grep 함수의 인자는 &Path가 되는 것입니다. 주석에도 써놓았듯이 PathBuf는 일반적으로 경로를 추가하거나 바꿀 수 있는 타입입니다. 그리고 참조를 해서 레퍼런스만 절달하게되면 &Path 타입이 됩니다. String과 &str의 관계와 동일합니다. 이렇게 하는 이유는 컴파일의 효율성을 높여서 성능을 높이기 위한 것입니다. PathBuf를 처음 생성해서 PathBuf타입으로 가지고 있을때 최대한 모든 처리를 실행해서 경로를 추가하거나 지우거나해서 최종 경로를 만들어내고, 다른 함수에 전달할 때는 &Path 타입으로 전달하도록하면 성능을 높일 수 있습니다. 프로그램이 보통 설정 파일이나 특정 파일을 찾을 때는 경로를 저장하는 변수의 값을 바꾸지만, 파일을 찾고나면 경로를 바꿀 일이 드뭅니다. 이미 있는 파일의 경로를 바꿀 일이 많지는 않으니까요. 파일을 지우더라도 경로는 바뀌지 않습니다. 그래서 읽기 전용으로 경로를 관리할 일이 많으므로 이렇게 별도의 타입을 만들었습니다.
 
@@ -486,7 +486,7 @@ grep 함수에 전달된 파일 경로를 이용하여 File::open함수를 호�
 fn main() -> std::io::Result<()> {
     let mut filename: PathBuf = current_dir()?;
 
-    filename.push("src/std_library_file/wrongfile.rs");
+    filename.push("code/std_library_file/wrongfile.rs");
     grep(&filename, "main")?; // show lines that include specific word
     Ok(())
 }

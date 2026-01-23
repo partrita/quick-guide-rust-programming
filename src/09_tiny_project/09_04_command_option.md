@@ -422,7 +422,7 @@ fn main() {
 % cargo run --bin serial_project_step4
    Compiling my-rust-book v0.1.0 (/Users/user/study/quick-guide-rust-programming)
 error[E0597]: `items` does not live long enough
-   --> src/serial_project_step4/main.rs:120:17
+   --> code/serial_project_step4/main.rs:120:17
     |
 108 |     let mut items: Vec<Box<dyn GenSerialData>> = vec![
     |         --------- binding `items` declared here
@@ -437,7 +437,7 @@ error[E0597]: `items` does not live long enough
     | - `items` dropped here while still borrowed
 
 error[E0502]: cannot borrow `items` as mutable because it is also borrowed as immutable
-   --> src/serial_project_step4/main.rs:141:17
+   --> code/serial_project_step4/main.rs:141:17
     |
 120 |     for item in items.iter() {
     |                 ------------
@@ -449,7 +449,7 @@ error[E0502]: cannot borrow `items` as mutable because it is also borrowed as im
     |                 ^^^^^ mutable borrow occurs here
 
 error[E0502]: cannot borrow `items` as mutable because it is also borrowed as immutable
-   --> src/serial_project_step4/main.rs:147:40
+   --> code/serial_project_step4/main.rs:147:40
     |
 120 |     for item in items.iter() {
     |                 ------------

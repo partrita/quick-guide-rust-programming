@@ -58,7 +58,7 @@ fn main() {
 ```bash
 
 error[E0369]: cannot add `{integer}` to `*const i32`
-   --> src/main.rs:178:36
+   --> code/main.rs:178:36
     |
 178 |         println!("Array={}", *(ptr + i));
     |                                --- ^ - {integer}
@@ -83,7 +83,7 @@ help: consider using `wrapping_add` or `add` for pointer + {integer}
 ```
 ```bash
 error[E0133]: dereference of raw pointer is unsafe and requires unsafe function or block
-   --> src/main.rs:178:30
+   --> code/main.rs:178:30
     |
 178 |         println!("Array={}", *ptr.wrapping_add(i));
     |                              ^^^^^^^^^^^^^^^^^^^^ dereference of raw pointer
@@ -121,7 +121,7 @@ Raw 포인터에 대한 것은 이게 전부이긴 합니다만 사실 실제 �
 다음은 제가 예제로 만들어본 Deque 라이브러리입니다.
 보통 std::ptr::null() 을 직접 사용하는 것보다 아래 예제 코드와 같이 std::ptr::NonNull()을 사용하는게 더 안전합니다.
 
-1. 첫번째로 초기화되지 않은 포인터를 선언할 때 NonNull::<T>::dangling()으로 초기화해서, 포인터가 가리키게될 데이터 타입을 지정하고 align된 포인터를 만들 수 있습니다.
+1. 첫번째로 초기화되지 않은 포인터를 선언할 때 `NonNull::<T>::dangling()`으로 초기화해서, 포인터가 가리키게될 데이터 타입을 지정하고 align된 포인터를 만들 수 있습니다.
 2. 포인터에 접근할 때 as_ptr 메소드를 강제로 사용하도록해서 포인터 접근의 안전성을 높입니다. 
 3. offset, read, write 등 포인터 접근을 검사해주는 메소드들을 사용할 수 있습니다.
 
@@ -396,7 +396,7 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 `Box<T>`를 잘 이해하기 위해서 아주 단순한 스마트 포인터를 직접 만들어보겠습니다. `Box<T>`는 다양한 메소드들이 있지만, 우리는 스마트 포인터의 가장 핵심 기능인 역참조와 자동 메모리 해지만을 구현해보겠습니다.
 
 ```rust
-// src/smart_pointer_basic/main.rs
+// code/smart_pointer_basic/main.rs
 use std::ops::{Deref, DerefMut};
 
 struct MySmartPointer<T>(T);
@@ -621,7 +621,7 @@ fn main() {
 $ cargo run --bin smart_pointer_application
    Compiling my-rust-book v0.1.0 (/home/gkim/study/my-rust-book)
 error[E0308]: mismatched types
-  --> src/smart_pointer_application/main.rs:73:31
+  --> code/smart_pointer_application/main.rs:73:31
    |
 73 |     let mut items = [&userid, &product];
    |                               ^^^^^^^^ expected `&UserID`, found `&ProductID`
@@ -630,7 +630,7 @@ error[E0308]: mismatched types
               found reference `&ProductID`
 
 error[E0596]: cannot borrow `**item` as mutable, as it is behind a `&` reference
-  --> src/smart_pointer_application/main.rs:57:9
+  --> code/smart_pointer_application/main.rs:57:9
    |
 57 |         item.get_input();
    |         ^^^^ cannot borrow as mutable
@@ -667,7 +667,7 @@ fn generate_serial(items: &[&dyn GenSerialData]) -> String {
 하지만 이 두 객체를 `Box<T>`에 담는다면 이야기는 달라집니다. 배열에 저장되는 것은 Box타입입니다. 그럼 Box를 사용하도록 바꿔보겠습니다.
 
 ```rust
-// src/smart_pointer_application/main.rs
+// code/smart_pointer_application/main.rs
 use std::io::{stdin, stdout, Write};
 
 fn get_user_input() -> String {

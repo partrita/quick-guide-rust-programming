@@ -21,7 +21,7 @@ for (i = 1; i < 100; i++)
 >
 
 ```rust
-// src/function_for/main.rs
+// code/function_for/main.rs
 fn fizzbuzz_if_else(max: i32) {
     for i in 1..=max {
         let rem_three: i32 = i % 3;
@@ -124,7 +124,7 @@ int main() {
 이 코드를 Rust로 변환하면 다음과 같이 만들 수 있습니다. 미리 주의해야 할 것은 Rust에서 if-else문은 값을 가진다는 것입니다.
 
 ```rust
-// src/if/main.rs
+// code/if/main.rs
 fn main() {
     let num = 5;
     let var = if num % 3 == 0 {
@@ -224,7 +224,7 @@ fn main() {
 
 ```bash
 error[E0308]: `if` and `else` have incompatible types
-  --> src/main.rs:10:13
+  --> code/main.rs:10:13
    |
 6  | /         if num % 5 == 0 {
 7  | |             //5 missing by mistake
@@ -273,7 +273,7 @@ fn fizzbuzz_if_else(max: i32) {
 mut 키워드를 사용하는 예제를 보겠습니다.
 
 ```rust
-// src/mutable_var/main.rs
+// code/mutable_var/main.rs
 fn fib(mut index: i32) -> i32 {
     let mut a = 1;
     let mut b = 1;
@@ -347,7 +347,7 @@ fn string_to_digit(input: String) -> i32 {
 
 ```bash
 error[E0369]: cannot subtract `char` from `char`
-  --> src/main.rs:10:19
+  --> code/main.rs:10:19
    |
 10 |         ret += c - '0'; // 컴파일 에러 발생
    |                - ^ --- char
@@ -379,7 +379,7 @@ C언어는 사실 어셈블리로 개발하던 프로젝트의 생산성을 높�
 잡설이 좀 길었지만 어쨌든 러스트에서는 타입의 변환을 as라는 키워드로 합니다. 추후에 몇 가지 타입 변환과 관련된 키워드를 보겠지만 가장 기본적인 것은 바로 as 입니다. 이렇게 언어 자체에 키워드가 있어서 타입이 변환된다는 것도 논리적으로 옳은 건지는 모르겠습니다만 Syntax sugar라고 생각해도 될듯합니다.
 
 ```rust
-// src/as/main.rs
+// code/as/main.rs
 use std::num::ParseIntError;
 
 fn string_to_digit(input: String) -> i32 {
@@ -431,7 +431,7 @@ string_to_digit 함수의 문제점은 문자열이 숫자 외의 문자를 가�
 패턴 매칭은 사실 정확한 정의가 무엇이기를 따지기보다는 쓰다 보면서 적응해 나가는 데 더 효율적인 접근방법이라고 생각합니다. 일단 가장 쉬운 예제를 하나 보겠습니다.
 
 ```rust
-// src/match/main.rs
+// code/match/main.rs
 fn fizzbuzz_2(max: i32) {
     for i in 1..=max {
         match (i % 3, i % 5) {
@@ -569,7 +569,7 @@ format!()은 문자열 객체를 반환해 주는 매크로 함수입니다. 조
 참고로 아래 예제를 실행해 보면 ret_zero라는 함수를 호출하고 있지 않다는 경고 메시지가 나옵니다. 에러는 아니므로 코드에 문제는 없습니다. \_var같은 변수도 마찬가지로 생성만 하고 사용하지 않습니다만 경고 메시지가 없습니다. 변수 이름을 \_로 시작했기 때문입니다. 이와같이 임시로 만들어놓고 나중에 사용하게 될 변수는 이름을 \_로 시작하면 컴파일을 깔끔하게 할 수 있습니다. ret_zero 함수의 이름에도 앞에 \_를 붙여보면 경고 메시지가 사라지는 것을 볼 수 있습니다.
 
 ```rust
-// src/expr/main.rs
+// code/expr/main.rs
 fn ret_zero() -> i32 {
     0
 }
@@ -610,7 +610,7 @@ fn main() {
 $ cargo run --bin expr
    Compiling my-rust-book v0.1.0 (/home/gkim/study/my-rust-book)
 warning: function `ret_zero` is never used
- --> src/expr/main.rs:1:4
+ --> code/expr/main.rs:1:4
   |
 1 | fn ret_zero() -> i32 {
   |    ^^^^^^^^
@@ -713,7 +713,7 @@ Slice: [2, 3, 4]
 위에서 슬라이스는 배열의 일부 혹은 전체에 접근하기 위한 타입이라고 설명했습니다. 다음 예제를 보겠습니다.
 
 ```rust
-// src/array_slice/main.rs
+// code/array_slice/main.rs
 fn sum_array_ref(nums: &[i32]) -> i32 {
     let mut s = 0;
     let len = nums.len();
@@ -779,7 +779,7 @@ Unmanaged 언어의 대표 주자인 C언어를 생각해 봅시다. C언어도 
 String을 사용하는 몇 가지 방식들에 대한 예제를 보면서 이야기하겠습니다.
 
 ```rust
-// src/string/main.rs
+// code/string/main.rs
 fn get_moved_string(data: &str) {
     println!("{}", data);
 }
@@ -853,7 +853,7 @@ pub struct String {
 }
 ```
 
-출처: <https://doc.rust-lang.org/src/alloc/string.rs.html#365>
+출처: <https://doc.rust-lang.org/code/alloc/string.rs.html#365>
 
 고급 언어를 다뤄봤다면 반드시 사용해 봤을 만한 벡터가 나타났습니다. 벡터는 기본적으로 배열이지만, 데이터의 크기가 동적으로 커지거나 작아질 수 있는 기능을 추가한 타입입니다. 배열은 생성 시에 지정된 크기만을 갖지만 벡터를 사용하면 데이터를 추가하면 추가하는 만큼 데이터의 크기가 커지고, 데이터를 지우면 지워진 만큼 크기가 작아집니다. 벡터에 대한 보다 자세한 설명은 다음 장에 이야기하겠습니다.
 
@@ -870,7 +870,7 @@ let gretting_slice: &String = &greeting[1..3];
 
 ```rust
 error[E0308]: mismatched types
-   --> src/main.rs:173:35
+   --> code/main.rs:173:35
     |
 173 |     let gretting_slice: &String = &greeting[1..3];
     |                         -------   ^^^^^^^^^^^^^^^ expected `&String`, found `&str`
@@ -982,7 +982,7 @@ println!("{}", mutable_string[0]);
 
 ```bash
 > error[E0277]: the type `String` cannot be indexed by `{integer}`
---> src/main.rs:167:20
+--> code/main.rs:167:20
 |
 167 |     println!("{}", mutable_string[0]);
 |                    ^^^^^^^^^^^^^^^^^ `String` cannot be indexed by `{integer}`
@@ -1037,7 +1037,7 @@ The Rust Programming Language(<https://doc.rust-lang.org/book/ch04-01-what-is-ow
 함수가 대표적인 하나의 스코프입니다. 몇 가지 스코프를 실험하는 예제를 만들어봤습니다.
 
 ```rust
-// src/ownership_scope/main.rs
+// code/ownership_scope/main.rs
 struct MyStruct {}
 
 impl Drop for MyStruct {
@@ -1128,7 +1128,7 @@ fn internal_scope() {
 ```rust
 $ cargo build
 error[E0425]: cannot find value `world_string` in this scope
-   --> src/main.rs:15:20
+   --> code/main.rs:15:20
     |
   7 |     println!("{}", world_string);
     |                    ^^^^^^^^^^^^ help: a local variable with a similar name exists: `hello_string`
@@ -1227,7 +1227,7 @@ println!("{}", user_input); // Compile error
 
 ```rust
 error[E0382]: borrow of moved value: `user_input`
-   --> src/main.rs:175:20
+   --> code/main.rs:175:20
     |
 171 |     let mut user_input = String::from("아이유");
     |         -------------- move occurs because `user_input` has type `String`, which does not implement the `Copy` trait
@@ -1355,7 +1355,7 @@ fn main() {
 
 ```rust
 error[E0382]: borrow of moved value: `user`
-   --> src/main.rs:8:22
+   --> code/main.rs:8:22
     |
 2   |     let user: [String;3] = ["My".to_string(),
     |         ---- move occurs because `user` has type `[String; 3]`, which does not implement the `Copy` trait
@@ -1367,7 +1367,7 @@ error[E0382]: borrow of moved value: `user`
     |                      ^^^^ value borrowed here after move
     |
 note: `into_iter` takes ownership of the receiver `self`, which moves `user`
-   --> /Users/user/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust/library/core/src/iter/traits/collect.rs:262:18
+   --> /Users/user/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/code/rust/library/core/code/iter/traits/collect.rs:262:18
     |
 262 |     fn into_iter(self) -> Self::IntoIter;
     |                  ^^^^
@@ -1383,7 +1383,7 @@ Copy trait나 self, clone 등 모르는 키워드들이 나와서 당황스러�
 일단 지금 상태에서 into_iter말고 iter 메소드를 사용해 보겠습니다.
 
 ```rust
-// src/ownership_move/main.rs
+// code/ownership_move/main.rs
 fn main() {
     let user: [String; 3] = [
         "My".to_string(),
@@ -1525,7 +1525,7 @@ C나 예전 C++을 사용해 본 개발자라면 이렇게 생각하면 쉽습�
 아래 예제는 다양한 구조체의 형태들을 소개하고 있습니다.
 
 ```rust
-// src/struct/main.rs
+// code/struct/main.rs
 // An attribute to hide warnings for unused code.
 #![allow(dead_code)]
 
@@ -1626,7 +1626,7 @@ fn main() {
 
 ```rust
 error[E0382]: borrow of moved value: `name`
- --> src/main.rs:6:20
+ --> code/main.rs:6:20
   |
 2 |     let name = String::from("Peter");
   |         ---- move occurs because `name` has type `String`, which does not implement the `Copy` trait
@@ -1658,7 +1658,7 @@ help: consider cloning the value if the performance cost is acceptable
 구조체를 만드는 방법을 봤으니 이번에는 구조체의 메소드를 정의하는 예제를 보겠습니다.
 
 ```rust
-// src/struct_define_main.rs
+// code/struct_define_main.rs
 struct Point {
     x: f32,
     y: f32,
@@ -1700,7 +1700,7 @@ Point와 Rectangle이라는 구조체를 만듭니다. 그다음 Rectangle 구�
 메소드의 첫 번째 인자에 &self만 사용할 수 있는 게 아니라 &mut self를 쓸 수 있습니다. 구조체 내부 값을 변경하는 메소드라면 &mut self를 써야 합니다. 그리고 자기 자신의 메모리를 해지하는 (원문으로는 consume이라고 표현합니다.) 메소드라면 self 인자를 가질 것입니다. self 앞에 &표시가 붙지 않으니 메소드가 자기 자신의 소유권을 전달받을 거라는 표시입니다.
 
 ```rust
-// src/struct_method/main.rs
+// code/struct_method/main.rs
 #[derive(Debug)]
 struct Point {
     x: f32,
@@ -1792,7 +1792,7 @@ fn main() {
 gkim@gkim-laptop:~/study/my-rust-book$ cargo run --bin struct_method
    Compiling my-rust-book v0.1.0 (/home/gkim/study/my-rust-book)
 error[E0382]: borrow of moved value: `rect2`
-  --> src/struct_method/main.rs:45:39
+  --> code/struct_method/main.rs:45:39
    |
 39 |         let rect2 = Rectangle {
    |             ----- move occurs because `rect2` has type `Rectangle`, which does not implement the `Copy` trait
@@ -1804,7 +1804,7 @@ error[E0382]: borrow of moved value: `rect2`
    |                                       ^^^^^ value borrowed here after move
    |
 note: `Rectangle::destroy` takes ownership of the receiver `self`, which moves `rect2`
-  --> src/struct_method/main.rs:27:16
+  --> code/struct_method/main.rs:27:16
    |
 27 |     fn destroy(self) {
    |                ^^^^
@@ -1820,7 +1820,7 @@ error: could not compile `my-rust-book` (bin "struct_method") due to 1 previous 
 이전 예제를 보면 Point 구조체와 Rectangle 구조체의 정의 윗줄에 #[derive(Debug)]라는 코드가 있습니다.
 
 ```rust
-// src/struct_method/main.rs
+// code/struct_method/main.rs
 #[derive(Debug)]
 struct Point {
     x: f32,
@@ -1865,7 +1865,7 @@ area size=0 Rectangle { top_left: Point { x: 0.0, y: 0.0 }, bottom_right: Point 
 C언어나 자바, Golang 등에서 보통 열거형을 쓰는 이유는 특정 값만을 가지는 타입을 새로 만들기 위해서입니다. 아래 C언어 예제를 보겠습니다.
 
 ```c
-// src/enum_basic/enum.c
+// code/enum_basic/enum.c
 #include <stdio.h>
 
 enum WEEK {
@@ -1894,7 +1894,7 @@ int main()
 러스트의 열거형도 마찬가지로 가장 기본적인 사용법은 특정 값만을 갖는 새로운 타입을 만드는 것입니다.
 
 ```rust
-// src/enum_basic/main.rs
+// code/enum_basic/main.rs
 enum WEEK {
     Sunday,
     Monday,
@@ -1927,7 +1927,7 @@ fn main() {
 /my-rust-book$ cargo run --bin enum_basic
    Compiling my-rust-book v0.1.0 (/home/gkim/study/my-rust-book)
 warning: variants `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, and `Saturday` are never constructed
- --> src/enum_basic/main.rs:3:5
+ --> code/enum_basic/main.rs:3:5
   |
 1 | enum WEEK {
   |      ---- variants in this enum
@@ -1967,7 +1967,7 @@ fn main() {
 $ cargo run --bin enum_basic
    Compiling my-rust-book v0.1.0 (/home/gkim/study/my-rust-book)
 error[E0308]: mismatched types
-  --> src/enum_basic/main.rs:13:26
+  --> code/enum_basic/main.rs:13:26
    |
 13 |     let tomorrow: WEEK = 1; // compile error!!!
    |                   ----   ^ expected `WEEK`, found integer
@@ -2002,13 +2002,13 @@ WEEK 타입의 변수에 WEEK 타입이 아닌 정수값을 저장할 수 없으
 $ cargo run --bin enum_basic
    Compiling my-rust-book v0.1.0 (/home/gkim/study/my-rust-book)
 error[E0004]: non-exhaustive patterns: `WEEK::Monday` not covered
-  --> src/enum_basic/main.rs:15:11
+  --> code/enum_basic/main.rs:15:11
    |
 15 |     match today {
    |           ^^^^^ pattern `WEEK::Monday` not covered
    |
 note: `WEEK` defined here
-  --> src/enum_basic/main.rs:1:6
+  --> code/enum_basic/main.rs:1:6
    |
 1  | enum WEEK {
    |      ^^^^
@@ -2037,7 +2037,7 @@ Rust 언어의 열거형(Enums)은 다음과 같이 데이터를 포함할 수�
 이전에 만든 열거형 예제에서는 각 요일마다 해야 할 일이 사용자에게 출력할 메시지 안에 저장되어 있어서 동적으로 바꿀 수 없게 되어있었습니다. 다음과 같이 각 요일마다 해야 할 일 등의 정보를 저장하도록 바꿀 수 있습니다.
 
 ```rust
-// src/enum_data/main.rs
+// code/enum_data/main.rs
 #[derive(Debug)]
 enum WEEK {
     Sunday(String, i32),
@@ -2105,7 +2105,7 @@ Result는 프로그램 실행 중에 발생한 에러를 표현하는 타입입�
 아주 간단한 예제부터 보겠습니다.
 
 ```rust
-// src/result_enum/main.rs
+// code/result_enum/main.rs
 fn divide(numerator: i32, denominator: i32) -> Result<i32, String> {
     if denominator == 0 {
         return Err(String::from("denominator cannot be zero"));
@@ -2251,7 +2251,7 @@ y is not present
 x is 5
 x is 5
 y is 0
-thread 'main' panicked at src/option_enum/main.rs:46:18:
+thread 'main' panicked at code/option_enum/main.rs:46:18:
 An argument of second should not be empty
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
@@ -2394,7 +2394,7 @@ fn main() {
 위의 예제를 ? 연산자를 이용해서 아래와 같이 바뀔 수 있습니다.
 
 ```rust
-// src/try_operator/main.rs
+// code/try_operator/main.rs
 fn foo() -> Result<i32, String> {
     let r = bar()?;
     println!("Do something with {}", r);
@@ -2491,7 +2491,7 @@ main.rs
 
 내가 지정한 mybin이라는 이름의 디렉토리를 만들고, mybin이라는 패키지를 만드는 Cargo.toml을 생성합니다. 최종 생성할 실행 파일의 이름도 mybin이 됩니다.
 
-라이브러리 패키지를 만들 때는 --lib 옵션을 사용합니다. src/main.rs대신에 src/lib.rs를 만들어줍니다.
+라이브러리 패키지를 만들 때는 --lib 옵션을 사용합니다. code/main.rs대신에 code/lib.rs를 만들어줍니다.
 
 ```bash
 $ cargo new mylib --lib
@@ -2579,7 +2579,7 @@ fn main() {
 
 만약 소스 디렉토리를 분리하고 싶다면 아래와 같이 각 하위 디렉토리마다 mod.rs라는 파일을 만들어야 합니다. 그리고 mod.rs에 같은 디렉토리에 있는 파일들을 참조해야 합니다.
 
-간단한 실험을 위해 아래와 같이 src/second_mod 라는 디렉토리를 만듭니다. 그리고 src/second_mod 디렉토리 안에 mod.rs파일과 sec_mod_file.rs 파일을 만듭니다.
+간단한 실험을 위해 아래와 같이 code/second_mod 라는 디렉토리를 만듭니다. 그리고 code/second_mod 디렉토리 안에 mod.rs파일과 sec_mod_file.rs 파일을 만듭니다.
 
 ```bash
 % ls -R
@@ -2592,14 +2592,14 @@ mod.rs          sec_mod_file.rs
 mod.rs 파일을 자신과 같은 디렉토리에 있는 모듈들을 모아서 참조하는 일을 합니다. 현재는 sec_mod_file.rs파일뿐이므로 아래와 같이 sec_mod_file.rs 파일을 public으로 참조합니다.
 
 ```rust
-// src/project/second_mod/mod.rs
+// code/project/second_mod/mod.rs
 pub mod sec_mod_file;
 ```
 
 sec_mod_file.rs에는 main에서 호출된 함수를 하나 만들어줍니다.
 
 ```rust
-// src/project/second_mod/sec_mod_file.rs
+// code/project/second_mod/sec_mod_file.rs
 pub fn second_module() {
     println!("Here second-module");
 }
@@ -2608,7 +2608,7 @@ pub fn second_module() {
 이제 main.rs에서 어떻게 참조할 수 있는지 확인해 보겠습니다.
 
 ```rust
-// src/project/main.rs
+// code/project/main.rs
 mod my_module;
 mod second_mod;
 

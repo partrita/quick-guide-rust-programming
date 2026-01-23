@@ -10,258 +10,259 @@ clap = { version = "4.5.26", features = ["string"] }
 magic-crypt = "4.0.1"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+tokio = { version = "1.49.0", features = ["full"] }
 
 [[bin]]
 name = "hello"
-path = "src/main.rs"
+path = "code/main.rs"
 
 [[bin]]
 name = "function_for"
-path = "src/function_for/main.rs"
+path = "code/function_for/main.rs"
 
 [[bin]]
 name = "if_return_value"
-path = "src/if/main.rs"
+path = "code/if/main.rs"
 
 [[bin]]
 name = "mutable_var"
-path = "src/mutable_var/main.rs"
+path = "code/mutable_var/main.rs"
 
 [[bin]]
 name = "as"
-path = "src/as/main.rs"
+path = "code/as/main.rs"
 
 [[bin]]
 name = "match"
-path = "src/match/main.rs"
+path = "code/match/main.rs"
 
 [[bin]]
 name = "expr"
-path = "src/expr/main.rs"
+path = "code/expr/main.rs"
 
 [[bin]]
 name = "array_slice"
-path = "src/array_slice/main.rs"
+path = "code/array_slice/main.rs"
 
 [[bin]]
 name = "string"
-path = "src/string/main.rs"
+path = "code/string/main.rs"
 
 [[bin]]
 name = "ownership_scope"
-path = "src/ownership_scope/main.rs"
+path = "code/ownership_scope/main.rs"
 
 [[bin]]
 name = "ownership_move"
-path = "src/ownership_move/main.rs"
+path = "code/ownership_move/main.rs"
 
 [[bin]]
 name = "struct_define"
-path = "src/struct_define/main.rs"
+path = "code/struct_define/main.rs"
 
 [[bin]]
 name = "struct_method"
-path = "src/struct_method/main.rs"
+path = "code/struct_method/main.rs"
 
 [[bin]]
 name = "enum_basic"
-path = "src/enum_basic/main.rs"
+path = "code/enum_basic/main.rs"
 
 [[bin]]
 name = "enum_data"
-path = "src/enum_data/main.rs"
+path = "code/enum_data/main.rs"
 
 [[bin]]
 name = "result_enum"
-path = "src/result_enum/main.rs"
+path = "code/result_enum/main.rs"
 
 [[bin]]
 name = "result_noreturn"
-path = "src/result_noreturn/main.rs"
+path = "code/result_noreturn/main.rs"
 
 [[bin]]
 name = "option_enum"
-path = "src/option_enum/main.rs"
+path = "code/option_enum/main.rs"
 
 [[bin]]
 name = "try_operator"
-path = "src/try_operator/main.rs"
+path = "code/try_operator/main.rs"
 
 [[bin]]
 name = "project"
-path = "src/project/main.rs"
+path = "code/project/main.rs"
 
 [[bin]]
 name = "functional_iterator"
-path = "src/functional_iterator/main.rs"
+path = "code/functional_iterator/main.rs"
 
 [[bin]]
 name = "functional_function_pointer"
-path = "src/functional_function_pointer/main.rs"
+path = "code/functional_function_pointer/main.rs"
 
 [[bin]]
 name = "functional_closure_nocapture"
-path = "src/functional_closure_nocapture/main.rs"
+path = "code/functional_closure_nocapture/main.rs"
 
 [[bin]]
 name = "functional_closure_capture"
-path = "src/functional_closure_capture/main.rs"
+path = "code/functional_closure_capture/main.rs"
 
 [[bin]]
 name = "functional_map"
-path = "src/functional_map/main.rs"
+path = "code/functional_map/main.rs"
 
 [[bin]]
 name = "functional_map_option"
-path = "src/functional_map_option/main.rs"
+path = "code/functional_map_option/main.rs"
 
 [[bin]]
 name = "functional_map_result"
-path = "src/functional_map_result/main.rs"
+path = "code/functional_map_result/main.rs"
 
 [[bin]]
 name = "functional_map_inspect"
-path = "src/functional_map_inspect/main.rs"
+path = "code/functional_map_inspect/main.rs"
 
 [[bin]]
 name = "functional_map_debugging"
-path = "src/functional_map_debugging/main.rs"
+path = "code/functional_map_debugging/main.rs"
 
 [[bin]]
 name = "functional_filter"
-path = "src/functional_filter/main.rs"
+path = "code/functional_filter/main.rs"
 
 [[bin]]
 name = "functional_reduce"
-path = "src/functional_reduce/main.rs"
+path = "code/functional_reduce/main.rs"
 
 [[bin]]
 name = "trait"
-path = "src/trait/main.rs"
+path = "code/trait/main.rs"
 
 [[bin]]
 name = "trait_display_debug"
-path = "src/trait_display_debug/main.rs"
+path = "code/trait_display_debug/main.rs"
 
 [[bin]]
 name = "trait_clone"
-path = "src/trait_clone/main.rs"
+path = "code/trait_clone/main.rs"
 
 [[bin]]
 name = "trait_default"
-path = "src/trait_default/main.rs"
+path = "code/trait_default/main.rs"
 
 [[bin]]
 name = "trait_partialeq_first"
-path = "src/trait_partialeq_first/main.rs"
+path = "code/trait_partialeq_first/main.rs"
 
 [[bin]]
 name = "trait_partialeq_second"
-path = "src/trait_partialeq_second/main.rs"
+path = "code/trait_partialeq_second/main.rs"
 
 [[bin]]
 name = "trait_partialeq_assert"
-path = "src/trait_partialeq_assert/main.rs"
+path = "code/trait_partialeq_assert/main.rs"
 
 [[bin]]
 name = "trait_partialeq_eq_hashmap"
-path = "src/trait_partialeq_eq_hashmap/main.rs"
+path = "code/trait_partialeq_eq_hashmap/main.rs"
 
 [[bin]]
 name = "trait_partialord"
-path = "src/trait_partialord/main.rs"
+path = "code/trait_partialord/main.rs"
 
 [[bin]]
 name = "trait_partialord_sort_first"
-path = "src/trait_partialord_sort_first/main.rs"
+path = "code/trait_partialord_sort_first/main.rs"
 
 [[bin]]
 name = "trait_partialord_sort_second"
-path = "src/trait_partialord_sort_second/main.rs"
+path = "code/trait_partialord_sort_second/main.rs"
 
 [[bin]]
 name = "trait_from"
-path = "src/trait_from/main.rs"
+path = "code/trait_from/main.rs"
 
 [[bin]]
 name = "trait_tryfrom"
-path = "src/trait_tryfrom/main.rs"
+path = "code/trait_tryfrom/main.rs"
 
 [[bin]]
 name = "trait_iterator"
-path = "src/trait_iterator/main.rs"
+path = "code/trait_iterator/main.rs"
 
 [[bin]]
 name = "trait_iterator_iter_mut"
-path = "src/trait_iterator_iter_mut/main.rs"
+path = "code/trait_iterator_iter_mut/main.rs"
 
 [[bin]]
 name = "generic_struct"
-path = "src/generic_struct/main.rs"
+path = "code/generic_struct/main.rs"
 
 [[bin]]
 name = "generic_trait"
-path = "src/generic_trait/main.rs"
+path = "code/generic_trait/main.rs"
 
 [[bin]]
 name = "generic_trait_struct"
-path = "src/generic_trait_struct/main.rs"
+path = "code/generic_trait_struct/main.rs"
 
 [[bin]]
 name = "error"
-path = "src/error/main.rs"
+path = "code/error/main.rs"
 
 [[bin]]
 name = "lifetime"
-path = "src/lifetime/main.rs"
+path = "code/lifetime/main.rs"
 
 [[bin]]
 name = "smart_pointer_basic"
-path = "src/smart_pointer_basic/main.rs"
+path = "code/smart_pointer_basic/main.rs"
 
 [[bin]]
 name = "smart_pointer_application"
-path = "src/smart_pointer_application/main.rs"
+path = "code/smart_pointer_application/main.rs"
 
 [[bin]]
 name = "std_library_vec"
-path = "src/std_library_vec/main.rs"
+path = "code/std_library_vec/main.rs"
 
 [[bin]]
 name = "std_library_hashmap_simple"
-path = "src/std_library_hashmap_simple/main.rs"
+path = "code/std_library_hashmap_simple/main.rs"
 
 [[bin]]
 name = "std_library_hashmap"
-path = "src/std_library_hashmap/main.rs"
+path = "code/std_library_hashmap/main.rs"
 
 [[bin]]
 name = "std_library_file"
-path = "src/std_library_file/main.rs"
+path = "code/std_library_file/main.rs"
 
 [[bin]]
 name = "serial_project_step0"
-path = "src/serial_project_step0/main.rs"
+path = "code/serial_project_step0/main.rs"
 
 [[bin]]
 name = "serial_project_step1"
-path = "src/serial_project_step1/main.rs"
+path = "code/serial_project_step1/main.rs"
 
 [[bin]]
 name = "serial_project_step2"
-path = "src/serial_project_step2/main.rs"
+path = "code/serial_project_step2/main.rs"
 
 [[bin]]
 name = "serial_project_step3"
-path = "src/serial_project_step3/main.rs"
+path = "code/serial_project_step3/main.rs"
 
 [[bin]]
 name = "serial_project_step4"
-path = "src/serial_project_step4/main.rs"
+path = "code/serial_project_step4/main.rs"
 
 [[bin]]
 name = "serial_project_step5"
-path = "src/serial_project_step5/main.rs"
+path = "code/serial_project_step5/main.rs"
 
 [[test]]
 name = "crate_clap"

@@ -127,7 +127,7 @@ DESCRIPTION
 
 ## cargo new
 
-현재 디렉토리에 새로운 패키지를 위한 디렉토리를 만들고, Cargo.toml 파일과 .gitignore 파일 등 개발을 시작하기 위해 필요한 파일들을 자동으로 생성해줍니다. 가장 많이 사용하는 옵션은 2가지 `-bin`과 `--lib`입니다. `--bin`옵션은 실행 파일을 만들기위한 패키지를 생성합니다. 지금 예제 파일들의 구조를 보면 전부 src/main.rs파일을 가지고 있습니다. 실행 파일을 만들기 위한 패키지이기 때문에 `--bin`옵션을 이용해서 만들어졌습니다. `--bin`옵션으로 패키지를 하나 생성해보겠습니다.
+현재 디렉토리에 새로운 패키지를 위한 디렉토리를 만들고, Cargo.toml 파일과 .gitignore 파일 등 개발을 시작하기 위해 필요한 파일들을 자동으로 생성해줍니다. 가장 많이 사용하는 옵션은 2가지 `-bin`과 `--lib`입니다. `--bin`옵션은 실행 파일을 만들기위한 패키지를 생성합니다. 지금 예제 파일들의 구조를 보면 전부 code/main.rs파일을 가지고 있습니다. 실행 파일을 만들기 위한 패키지이기 때문에 `--bin`옵션을 이용해서 만들어졌습니다. `--bin`옵션으로 패키지를 하나 생성해보겠습니다.
 
 ```bash
 $ cargo new --bin bin-example
@@ -136,16 +136,16 @@ bin-example $ ls -a
 .          ..         .git       .gitignore Cargo.toml src
 ```
 
-bin-example이라는 이름의 패키지를 만들었습니다. 바이너리, 즉 실행 파일을 만들기 위한 패키지입니다. bin-example디렉토리에는 Git툴을 위한 .git디렉토리와 .gitignore파일이 생성되었습니다. 그리고 Cargo자신이 프로젝트 관리를 위하 사용하는 Cargo.toml파일과 소스를 저장할 src 디렉토리가 생성되었습니다. src/main.rs 파일에는 간단한 예제가 들어있습니다.
+bin-example이라는 이름의 패키지를 만들었습니다. 바이너리, 즉 실행 파일을 만들기 위한 패키지입니다. bin-example디렉토리에는 Git툴을 위한 .git디렉토리와 .gitignore파일이 생성되었습니다. 그리고 Cargo자신이 프로젝트 관리를 위하 사용하는 Cargo.toml파일과 소스를 저장할 src 디렉토리가 생성되었습니다. code/main.rs 파일에는 간단한 예제가 들어있습니다.
 
 ```rust
-bin-example $ cat src/main.rs 
+bin-example $ cat code/main.rs
 fn main() {
     println!("Hello, world!");
 }
 ```
 
-`--lib`옵션은 라이브러리를 만들기 위한 패키지를 생성할 때 사용합니다. src/main.rs가 아니라 src/lib.rs 파일을 생성합니다.
+`--lib`옵션은 라이브러리를 만들기 위한 패키지를 생성할 때 사용합니다. code/main.rs가 아니라 code/lib.rs 파일을 생성합니다.
 
 ```
  $ cargo new --lib lib-example
@@ -154,14 +154,14 @@ note: see more `Cargo.toml` keys and their definitions at https://doc.rust-lang.
 $ cd lib-example
 lib-example $ ls -a
 .          ..         .git       .gitignore Cargo.toml src
-lib-example % ls src/
+lib-example % ls code/
 lib.rs
 ```
 
 lib.rs파일은 간단한 함수의 예제와 유닛 테스트 예제가 들어있습니다.
 
 ```rust
-% cat src/lib.rs
+% cat code/lib.rs
 pub fn add(left: u64, right: u64) -> u64 {
     left + right
 }
@@ -406,7 +406,7 @@ Cargo.toml 파일을 수정하는 명령들은 Cargo.toml을 손으로 직접 �
 실험을 위해 다음과 같이 println앞에 불필요한 공백을 추가해주고, ;앞에도 공백을 넣어주겠습니다.
 
 ```bash
-bin-example $ cat src/main.rs
+bin-example $ cat code/main.rs
 fn main() {
     	println!("Hello, world!")    ;
 }
@@ -416,7 +416,7 @@ fn main() {
 
 ```bash
 user@AL02279337 bin-example % cargo fmt --check
-Diff in /Users/user/study/bin-example/src/main.rs:1:
+Diff in /Users/user/study/bin-example/code/main.rs:1:
  fn main() {
 -        println!("Hello, world!")    ;
 +    println!("Hello, world!");
@@ -427,7 +427,7 @@ Diff in /Users/user/study/bin-example/src/main.rs:1:
 
 ```bash
 bin-example $ cargo fmt
-bin-example $ cat src/main.rs
+bin-example $ cat code/main.rs
 fn main() {
     println!("Hello, world!");
 }
@@ -463,10 +463,10 @@ mod tests {
 3. `use super::*;`: 테스트가 존재하는 파일에서 정의한 함수나 구조체 등을 사용하게 해줍니다.
 4. `#[test]`: 각 테스트 함수마다 따로 cargo test 명령으로 실행될 수 있도록 해줍니다. 이 표시가 없으면 cargo test로 실행할 수 있습니다.
 
-이전에 우리는 lib-example이라는 라이브러리를 만드는 패키지를 생성해보았습니다. Cargo가 패키지를 생성하면서 src/lib.rs 파일을 같이 생성해주고 간단한 예제 코드를 넣어주었습니다. 해당 파일을 열어서 다음과 같이 println 매크로 함수를 이용해서 디버깅 메세지를 넣어주겠습니다.
+이전에 우리는 lib-example이라는 라이브러리를 만드는 패키지를 생성해보았습니다. Cargo가 패키지를 생성하면서 code/lib.rs 파일을 같이 생성해주고 간단한 예제 코드를 넣어주었습니다. 해당 파일을 열어서 다음과 같이 println 매크로 함수를 이용해서 디버깅 메세지를 넣어주겠습니다.
 
 ```rust
-// lib-example/src/lib.rs
+// lib-example/code/lib.rs
 pub fn add(left: u64, right: u64) -> u64 {
     left + right
 }
@@ -490,7 +490,7 @@ mod tests {
 lib-example $ cargo test it_works            
    Compiling lib-example v0.1.0 (/Users/user/study/lib-example)
     Finished `test` profile [unoptimized + debuginfo] target(s) in 0.39s
-     Running unittests src/lib.rs (target/debug/deps/lib_example-89f31e00332d9f1d)
+     Running unittests code/lib.rs (target/debug/deps/lib_example-89f31e00332d9f1d)
 
 running 1 test
 test tests::it_works ... ok
@@ -503,7 +503,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 ```bash
 lib-example $ cargo test it_works -- --nocapture
     Finished `test` profile [unoptimized + debuginfo] target(s) in 0.01s
-     Running unittests src/lib.rs (target/debug/deps/lib_example-89f31e00332d9f1d)
+     Running unittests code/lib.rs (target/debug/deps/lib_example-89f31e00332d9f1d)
 
 running 1 test
 Try 2 + 2
@@ -530,7 +530,7 @@ cargo명령은 --quiet 옵션을 받아서 빌드에 관한 로그 메세지를 
 ```bash
 lib-example $ cargo test
     Finished `test` profile [unoptimized + debuginfo] target(s) in 0.09s
-     Running unittests src/lib.rs (target/debug/deps/lib_example-89f31e00332d9f1d)
+     Running unittests code/lib.rs (target/debug/deps/lib_example-89f31e00332d9f1d)
 
 running 1 test
 test tests::it_works ... ok
@@ -565,7 +565,7 @@ cargo test 명령을 실행하면 모든 유닛테스트와 통합테스트를 �
 ```bash
  lib-example $ cargo test
     Finished `test` profile [unoptimized + debuginfo] target(s) in 0.86s
-     Running unittests src/lib.rs (target/debug/deps/lib_example-89f31e00332d9f1d)
+     Running unittests code/lib.rs (target/debug/deps/lib_example-89f31e00332d9f1d)
 
 running 1 test
 test tests::it_works ... ok
@@ -598,7 +598,7 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-명시적으로 테스트 함수를 따로 만들어서 실행하는 테스트도 있지만 다음과 같이 주석 안에 예제 코드를 넣고 마치 각 함수의 유닛 테스트인것 처럼 실행할 수도 있습니다. 다음 예제는 lib-example 패키지에있는 src/lib.rs 파일입니다. add함수에 주석을 추가하고, 주석 안에 테스트 코드를 넣어준 것을 볼 수 있습니다.
+명시적으로 테스트 함수를 따로 만들어서 실행하는 테스트도 있지만 다음과 같이 주석 안에 예제 코드를 넣고 마치 각 함수의 유닛 테스트인것 처럼 실행할 수도 있습니다. 다음 예제는 lib-example 패키지에있는 code/lib.rs 파일입니다. add함수에 주석을 추가하고, 주석 안에 테스트 코드를 넣어준 것을 볼 수 있습니다.
 
 ```rust
 /// '/'를 3개를 써서 주석을 만들고, 첫줄에는 함수에 대한 짧은 소개를 씁니다.
@@ -633,7 +633,7 @@ mod tests {
 ```bash
 lib-example $ cargo test
     Finished `test` profile [unoptimized + debuginfo] target(s) in 0.25s
-     Running unittests src/lib.rs (target/debug/deps/lib_example-89f31e00332d9f1d)
+     Running unittests code/lib.rs (target/debug/deps/lib_example-89f31e00332d9f1d)
 
 running 1 test
 test tests::it_works ... ok
@@ -650,7 +650,7 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
    Doc-tests lib_example
 
 running 1 test
-test src/lib.rs - add (line 8) ... ok
+test code/lib.rs - add (line 8) ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.50s
 ```
@@ -687,8 +687,8 @@ lib-example $ cargo test --doc add
    Doc-tests lib_example
 
 running 2 tests
-test src/lib.rs - add (line 12) ... ok
-test src/lib.rs - add (line 8) ... ok
+test code/lib.rs - add (line 12) ... ok
+test code/lib.rs - add (line 8) ... ok
 
 test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.58s
 ```
@@ -727,7 +727,7 @@ std 크레이트의 메뉴얼 사이트 https://doc.rust-lang.org/std/index.html
 
 그 다음으로 보이는 주석들은 `///`을 사용한 것들입니다. 참고로 `//`와 같이 `/`를 2번만 사용한 주석은 문서에 나타나지 않습니다. 각 함수나 구조체, 매크로, 직접 정의한 타입 등등 필요한 곳에 `///`로 시작하는 주석을 써주면 cargo doc 명령이 이 주석이 함수인지 구조체인지 등을 파악해서 종류별로 나누고 html 문서로 만들어줍니다. 
 
-아래는 lib-example 크레이트의 src/lib.rs 파일에 다음과 같이 문서화를 위한 주석을 추가한 예제입니다. cargo doc 명령으로 사이트를 생성한 후 각 함수와 구조체의 주석이 문서화 사이트에 나타나는 것을 확인해보시기 바랍니다. 
+아래는 lib-example 크레이트의 code/lib.rs 파일에 다음과 같이 문서화를 위한 주석을 추가한 예제입니다. cargo doc 명령으로 사이트를 생성한 후 각 함수와 구조체의 주석이 문서화 사이트에 나타나는 것을 확인해보시기 바랍니다.
 
 ```rust
 //! # 제목입니다.
