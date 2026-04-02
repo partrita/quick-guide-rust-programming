@@ -18,6 +18,6 @@
   - [커맨드 라인 옵션](09_tiny_project/09_04_command_option.md)
   - [설정 파일](09_tiny_project/09_05_conf_file.md)
 - [개발팁](10_etc.md)
-- [쓰레드](11_thread.md)
+- [스레드](11_thread.md)
 - [비동기 프로그래밍의 기본 개념](12_async.md)
 - [Future Work](99_future_work.md)

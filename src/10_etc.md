@@ -1,7 +1,12 @@
+# 로그(`Log`)와 시그널 핸들링(`Signal handling`)
 
-# Log
+## 로그(`Log`) 사용하기
 
-# Signal handling
+러스트에서 로그를 남기기 위해 `tracing` 크레이트와 `tracing-subscriber`를 자주 사용합니다. `error!`, `info!`, `debug!`, `trace!` 등의 매크로를 사용하여 로그 레벨별로 메시지를 남길 수 있습니다.
+
+## 시그널 핸들링(`Signal handling`)
+
+`signal-hook`이나 `signal-hook-tokio` 크레이트를 사용하여 `SIGHUP`, `SIGTERM`, `SIGINT` 등 운영체제의 시그널을 비동기적으로 처리할 수 있습니다.
 
 ```rust,ignore
 use std::collections::HashMap;
@@ -136,4 +141,3 @@ async fn main() -> anyhow::Result<()> {
     Ok(())
 }
 ```
-
