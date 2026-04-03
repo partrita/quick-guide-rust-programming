@@ -1,143 +1,37 @@
-# 로그(`Log`)와 시그널 핸들링(`Signal handling`)
+# 로그(Log)와 시그널 핸들링(Signal Handling)
 
-## 로그(`Log`) 사용하기
+실무 수준의 애플리케이션을 개발할 때 필수적인 로그 기록 방법과 운영체제 시그널 처리 방법을 알아보겠습니다.
 
-러스트에서 로그를 남기기 위해 `tracing` 크레이트와 `tracing-subscriber`를 자주 사용합니다. `error!`, `info!`, `debug!`, `trace!` 등의 매크로를 사용하여 로그 레벨별로 메시지를 남길 수 있습니다.
+## 로그(Log) 사용하기
 
-## 시그널 핸들링(`Signal handling`)
+`Rust`에서 로그를 남기기 위해 가장 널리 쓰이는 도구는 `tracing` 크레이트와 `tracing-subscriber`입니다. 기존의 단순한 로그 기록을 넘어, 비동기 작업의 흐름(Span)을 추적하는 기능이 강력합니다.
 
-`signal-hook`이나 `signal-hook-tokio` 크레이트를 사용하여 `SIGHUP`, `SIGTERM`, `SIGINT` 등 운영체제의 시그널을 비동기적으로 처리할 수 있습니다.
+*   `error!`, `info!`, `debug!`, `trace!`: 로그 레벨별 기록 매크로.
+*   `span!`: 특정 작업 단위(범위)를 설정하여 로그에 맥락을 추가합니다.
+*   `EnvFilter`: `RUST_LOG` 환경 변수를 통해 실행 시점에 로그 레벨을 동적으로 조절할 수 있게 해줍니다.
 
-```rust,ignore
-use std::collections::HashMap;
-//use std::env;
+## 시그널 핸들링(Signal Handling)
 
-use tracing::info;
-use tracing::span;
-use tracing::trace;
-use tracing::Instrument;
-use tracing::Level;
-use tracing_subscriber::EnvFilter;
+운영체제로부터 전달되는 `SIGINT`(Ctrl+C), `SIGTERM`(종료 요청) 등의 시그널을 우아하게 처리(`Graceful Shutdown`)하는 것은 매우 중요합니다. `signal-hook`과 `signal-hook-tokio`를 사용하면 비동기 환경에서도 안전하게 시그널을 가로챌 수 있습니다.
 
-//use std::io::Error;
-
+```rust
+// code/etc/main.rs (주요 로직 요약)
 use signal_hook::consts::signal::*;
 use signal_hook_tokio::Signals;
-
 use futures::stream::StreamExt;
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::Arc;
-
-#[derive(Debug)]
-struct Context {
-    variables: HashMap<String, String>,
-    dry_run: bool,
-}
-
-impl Context {
-    async fn from_path(path: &str) -> anyhow::Result<Self> {
-        let mut variables = HashMap::new();
-        tracing::error!("Creating context");
-        info!("Creating context from path: {}", path);
-        tracing::debug!("Creating context");
-        trace!(?path);
-
-        // test span again
-        // If log level is info, process_recipe() prints log message like
-        // 2025-02-23T15:10:29.315933Z  INFO cook{path="/path/to/file"}: rust_log: process_recipe::Ingredients: ["Pasta", "Eggs", "Bacon", "Parmesan"]
-        // If log level is debug, process_recipe() prints log message like
-        // 2025-02-23T15:09:40.495049Z  INFO my_span_main{path="/path/to/file"}:cook{path="/path/to/file"}: rust_log: process_recipe::Ingredients: ["Pasta", "Eggs", "Bacon", "Parmesan"]
-        // because the span of "my_span_main" is added for the debug level.
-        let span = span!(Level::INFO, "cook", ?path);
-        process_recipe().instrument(span).await?;
-
-        variables.insert("path".to_owned(), path.to_owned());
-        Ok(Self {
-            variables,
-            dry_run: false,
-        })
-    }
-}
-
-async fn process_recipe() -> anyhow::Result<()> {
-    let recipe = "Pasta Carbonara";
-    let ingredients = vec!["Pasta", "Eggs", "Bacon", "Parmesan"];
-    let steps = vec![
-        "Cook the pasta",
-        "Fry the bacon",
-        "Mix the eggs and cheese",
-        "Combine everything",
-    ];
-
-    tracing::error!("process_recipe::Recipe: {}", recipe);
-    tracing::info!("process_recipe::Ingredients: {:?}", ingredients);
-    tracing::debug!("Steps: {:?}", steps);
-
-    Ok(())
-}
 
 async fn handle_signals(mut signals: Signals, term: Arc<AtomicBool>) {
     while let Some(signal) = signals.next().await {
         match signal {
-            SIGHUP => {
-                // Reload configuration
-                // Reopen the log file
-                println!("SIGHUP received");
-            }
+            SIGHUP => println!("설정 파일을 다시 읽어옵니다."),
             SIGTERM | SIGINT | SIGQUIT => {
-                // Shutdown the system;
-                println!("SIGTERM, SIGINT, or SIGQUIT received");
+                println!("프로그램을 안전하게 종료합니다...");
                 term.store(true, Ordering::Relaxed);
             }
             _ => unreachable!(),
         }
     }
 }
-
-#[tokio::main]
-async fn main() -> anyhow::Result<()> {
-    println!("Hello, world!");
-
-    // error,rust_log=info: rust_log crate can print info-level log messages, others can print only error level
-    // But env RUST_LOG can override this setting, for example) RUST_LOG=debug cargo run
-    let envfilter = EnvFilter::builder()
-        .try_from_env()
-        .unwrap_or_else(|_| EnvFilter::new("error,rust_log=info")); // try with rust_log=debug and rust_log=info to test two span! calls
-    tracing_subscriber::fmt().with_env_filter(envfilter).init();
-
-    tracing::error!("This is an error message");
-    tracing::info!("This is an info message"); // This is not printed because the filter is set to info.
-    tracing::debug!("This is a debug message"); // This is not printed because the filter is set to info.
-
-    let path = "/path/to/file".to_owned();
-
-    // ADD "my_span_main{path="/path/to/file"}" to the log message if the log level is DEBUG
-    let span = span!(Level::DEBUG, "my_span_main", ?path);
-
-    let context = Context::from_path(&path).instrument(span.clone()).await?;
-    tracing::info!("info level message context={:?}", context);
-    tracing::debug!("debug message");
-
-    let signals = Signals::new(&[SIGHUP, SIGTERM, SIGINT, SIGQUIT])?;
-    let handle = signals.handle();
-
-    let term = Arc::new(AtomicBool::new(false));
-    let signals_task = tokio::spawn(handle_signals(signals, term.clone()));
-
-    // Execute your main program logic
-
-    while !term.load(Ordering::Relaxed) {
-        // Do some time-limited stuff here
-        // (if this could block forever, then there's no guarantee the signal will have any
-        // effect).
-        tokio::time::sleep(std::time::Duration::from_secs(1)).await;
-        println!("sleeping");
-    }
-
-    // Terminate the signal stream.
-    handle.close();
-    signals_task.await?;
-
-    Ok(())
-}
 ```
+
+시그널 처리를 별도의 태스크(`tokio::spawn`)로 분리하고, 원자적 변수(`AtomicBool`)를 통해 메인 루프에 종료 신호를 보내는 방식이 전형적인 패턴입니다. 이를 통해 작업 중인 데이터를 안전하게 저장하고 자원을 정리한 뒤 종료할 수 있습니다.
